@@ -1,8 +1,5 @@
 package muldrik.curves.api
 
-import java.lang.IllegalArgumentException
-import java.lang.Math.sin
-
 typealias fn = (t: Double) -> Double
 val t = fun(t: Double) = t
 operator fun fn.plus(other: fn): fn = fun (t: Double) = this.invoke(t) + other.invoke(t)
@@ -17,9 +14,6 @@ operator fun Number.plus(other: fn): fn = other + this
 operator fun Number.minus(other: fn): fn = other - this
 operator fun Number.times(other: fn): fn = other * this
 operator fun Number.div(other: fn): fn = other / this
-
-
-
 
 data class Curve(val range: IntRange, val xFun: fn, val yFun: fn,
                  val id: Int = 0,
