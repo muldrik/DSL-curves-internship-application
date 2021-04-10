@@ -89,4 +89,4 @@ val curves = curves {
     drawCurves(curves)
 ```
 
-![Colored](/img/example.png)
+![Colored](/img/modified.png)
