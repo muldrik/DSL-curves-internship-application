@@ -14,7 +14,7 @@ function
 
 Then the resulting object can be inspected manually or plotted by passing it into ***drawCurves()*** function
 
-```
+```kotlin
 val result = curves {
   curve {
     range = 0..7
@@ -34,6 +34,8 @@ val result = curves {
 }
 drawCurves(result)
 ```
+
+![Basic example output](/img/example.png)
 
 The example is already stored in Main.kt
 
@@ -62,3 +64,29 @@ Optional arguments:
 * ***color*** - String, specifies the color of a given curve
 * ***size*** - Double, determines the thickness of a given curve
 * ***alpha*** Double, determines the transparency. 0.0 for transparent, 1.0 for solid
+
+```kotlin
+val curves = curves {
+        curve {
+            range = 0..7
+            x = t * 0
+            y = t
+            color = "blue"
+        }
+        curve {
+            range = -1..1
+            x = 3 * (1 - t * t)
+            y = 4 + (t + 1) * 3 / 2
+            size = 6.0
+        }
+        curve {
+            range = -2..2
+            x = 4 - t * t
+            y = t + 2
+            alpha = 0.3
+        }
+    }
+    drawCurves(curves)
+```
+
+![Colored](/img/example.png)

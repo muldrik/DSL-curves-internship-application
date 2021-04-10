@@ -81,7 +81,7 @@ fun drawCurves(plot: Plot) {
 
     SwingUtilities.invokeLater {
         window.pack()
-        window.size = Dimension(1600, 900)
+        window.size = Dimension(1920, 1080)
         window.setLocationRelativeTo(null)
         window.isVisible = true
     }
