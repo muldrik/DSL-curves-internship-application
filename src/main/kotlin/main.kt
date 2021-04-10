@@ -7,9 +7,6 @@ import muldrik.curves.dsl.curves
 import muldrik.curves.dsl.t
 
 fun main() {
-    val w = 3 * (1 - t * t)
-    println(w(0.0))
-    println(w.toString())
     val curves = curves {
         curve {
             range = 0..7
