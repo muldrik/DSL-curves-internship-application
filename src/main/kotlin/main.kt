@@ -1,16 +1,15 @@
-import jetbrains.letsPlot.geom.geom_density
-import jetbrains.letsPlot.geom.geom_histogram
-import jetbrains.letsPlot.geom.geom_path
-import jetbrains.letsPlot.lets_plot
-import muldrik.curves.api.*
+import muldrik.curves.api.div
+import muldrik.curves.api.minus
+import muldrik.curves.api.plus
+import muldrik.curves.api.times
 import muldrik.curves.dsl.curve
 import muldrik.curves.dsl.curves
-import muldrik.curves.dsl.sample
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
+import muldrik.curves.dsl.t
 
 fun main() {
+    val w = 3 * (1 - t * t)
+    println(w(0.0))
+    println(w.toString())
     val curves = curves {
         curve {
             range = 0..7

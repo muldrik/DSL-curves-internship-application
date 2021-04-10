@@ -21,11 +21,12 @@ dependencies {
     implementation("org.jetbrains.lets-plot:lets-plot-batik:$lets_plot_version")
     api("org.jetbrains.lets-plot:lets-plot-common:$lets_plot_version")
     api("org.jetbrains.lets-plot-kotlin:lets-plot-kotlin-api:$lets_plot_api_version")
-    testImplementation(kotlin("test-junit"))
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testImplementation(kotlin("test-junit5"))
 }
 
-tasks.test {
-    useJUnit()
+tasks.withType<Test>().all {
+    useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile>() {

@@ -3,20 +3,34 @@ package muldrik.curves.dsl
 import jetbrains.letsPlot.coord_fixed
 import jetbrains.letsPlot.geom.geom_path
 import jetbrains.letsPlot.intern.Plot
-import jetbrains.letsPlot.intern.PosKind
-import jetbrains.letsPlot.intern.layer.PosOptions
 import jetbrains.letsPlot.lets_plot
 import muldrik.curves.api.Curve
 import muldrik.curves.api.fn
 
 
-fun sample(coordFun: fn, range: IntRange, samples: Int): List<Double> {
+/**
+ * Universal linear function that is used to build polynomial expressions
+ */
+val t = fun(t: Double) = t
+
+
+/**
+ * Generate equally spaced points
+ * @param samples number of points
+ * @param range range and using
+ * @param coordinateFun function
+ */
+fun sample(coordinateFun: fn, range: IntRange, samples: Int): List<Double> {
     val l = range.first.toDouble()
     val r = range.last.toDouble()
     return List(samples) { index ->
-        coordFun (l + (r - l) * index / samples)
+        coordinateFun (l + (r - l) * index / samples)
     }
 }
+
+/**
+ * Converts a curve to a data type accepted by the plotting library
+ */
 
 fun curveToPath(curve: Curve) = geom_path(
     color = curve.color,
@@ -28,7 +42,11 @@ fun curveToPath(curve: Curve) = geom_path(
     y = "y${curve.id}"
 }
 
-fun curves(settings: PlotBuilder.() -> Unit): Map<String, Plot> {
+/**
+ * Creates multiple curves and joins them into a single plot
+ */
+
+fun curves(settings: PlotBuilder.() -> Unit): Plot {
     val curves = PlotBuilder().apply(settings)
     val data = curves.curves.associateBy({ "x${it.id}" }, { sample(it.xFun, it.range, it.samples) }) +
             curves.curves.associateBy({ "y${it.id}" }, { sample(it.yFun, it.range, it.samples) })
@@ -37,23 +55,33 @@ fun curves(settings: PlotBuilder.() -> Unit): Map<String, Plot> {
         pathBuilder += curveToPath(it)
     }
     pathBuilder += coord_fixed(1.0)
-    return mapOf(curves.name to pathBuilder)
+    return pathBuilder
 }
 
+
+/**
+ * An object to create extension functions on.
+ * Stores the information needed to create a curve
+ * Default parameters are the same as in the api but can be freely modified without affecting the api
+ */
 class CurveBuilder {
     lateinit var range: IntRange
     lateinit var x: fn
     lateinit var y: fn
-    var samples = 400
+    var samples = 500
     var color: String = "red"
-    var alpha: Double = 0.3
-    var size: Double = 3.0
+    var alpha: Double = 0.9
+    var size: Double = 2.0
 }
 
+/**
+ * An object to create extension functions on.
+ * Stores the created curves
+ * Can be easily modified without changing the api
+ */
 class PlotBuilder {
     var currentIndex = 0
     val curves = mutableListOf<Curve>()
-    var name = "Curves"
 }
 
 fun PlotBuilder.curve(settings: CurveBuilder.() -> Unit) {
@@ -63,5 +91,4 @@ fun PlotBuilder.curve(settings: CurveBuilder.() -> Unit) {
                     curve.color,
                     curve.alpha,
                     curve.size))
-    println(currentIndex)
 }
