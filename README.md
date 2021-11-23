@@ -1,4 +1,4 @@
-# Curves DSL, test project for JetBrains 2021 internship program
+# Curves DSL
 
 This project implements a dsl to easily
 declare and draw curves described with polynomial
